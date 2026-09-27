@@ -1,97 +1,56 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quantum Lab v0.1</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+// QUANTUM LAB — v0.1
 
-<body>
+// Show the main menu
+function showMenu() {
+  const menu = document.getElementById("menu");
+  if (menu) {
+    menu.classList.remove("hidden");
+    menu.scrollIntoView({ behavior: "smooth" });
+  }
+}
 
-  <div class="stars"></div>
+// Show a specific selected section and hide all other section cards
+function showSection(sectionId) {
+  const sections = document.querySelectorAll("main .card");
 
-  <header class="topbar">
-    <h1>⚛️ Quantum Lab</h1>
-    <button id="readButton">🔊 Read Aloud</button>
-  </header>
+  sections.forEach((section) => {
+    // Keep the Welcome card and Main Menu open, hide the lesson cards
+    if (section.id !== "menu" && !section.querySelector("button[onclick='showMenu()']")) {
+      section.classList.add("hidden");
+    }
+  });
 
-  <main>
+  // Reveal the selected card
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) {
+    targetSection.classList.remove("hidden");
+    targetSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
 
-    <!-- Welcome screen -->
-    <section class="card">
-      <h2>🌌 Welcome to Quantum Lab</h2>
-      <p>
-        Learn quantum mechanics with visual experiments,
-        short explanations, and interactive lessons.
-      </p>
-      <button onclick="showMenu()">
-        Enter the Lab
-      </button>
-    </section>
+// Read text aloud
+const readButton = document.getElementById("readButton");
+if (readButton) {
+  readButton.addEventListener("click", () => {
+    const text = document.body.innerText;
+    speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 0.9;
+    speech.pitch = 1;
+    speech.volume = 1;
+    speechSynthesis.speak(speech);
+  });
+}
 
-    <!-- Main menu -->
-    <section id="menu" class="card hidden">
-      <h2>Main Menu</h2>
-      <div class="menuButtons">
-        <button onclick="showSection('learn-section')">📚 Learn</button>
-        <button onclick="showSection('sprint-section')">🧠 Sprint</button>
-        <button onclick="showSection('experiment-section')">🔬 Experiment</button>
-        <button onclick="showSection('maths-section')">🧮 Maths</button>
-      </div>
-    </section>
+// Energy-level experiment slider logging
+const energySlider = document.querySelector('input[type="range"]');
+if (energySlider) {
+  energySlider.addEventListener("input", () => {
+    const level = energySlider.value;
+    console.log("Quantum energy level:", level);
+  });
+}
 
-    <!-- Learn section -->
-    <section id="learn-section" class="card hidden">
-      <h2>Lesson 1</h2>
-      <h3>What is Quantum Mechanics?</h3>
-      <p>
-        Quantum mechanics is the branch of physics
-        that describes very small things like
-        electrons, atoms, and light.
-      </p>
-      <p>
-        Things at this scale behave differently
-        from everyday objects.
-      </p>
-    </section>
+console.log("⚛️ Quantum Lab v0.1 loaded!");
 
-    <!-- Sprint section -->
-    <section id="sprint-section" class="card hidden">
-      <h2>🧠 Quick Sprint</h2>
-      <p>Test your knowledge with quick flash questions coming soon!</p>
-    </section>
-
-    <!-- Maths section -->
-    <section id="maths-section" class="card hidden">
-      <h2>🧮 Maths Pathway</h2>
-      <ul>
-        <li>Functions and Graphs</li>
-        <li>Derivatives</li>
-        <li>Integrals</li>
-        <li>Differential Equations</li>
-        <li>Complex Numbers</li>
-        <li>Vectors</li>
-        <li>Matrices</li>
-      </ul>
-    </section>
-
-    <!-- Experiment section -->
-    <section id="experiment-section" class="card hidden">
-      <h2>🔬 First Experiment</h2>
-      <h3>Particle in a Box</h3>
-      <p>
-        Change the energy level and watch
-        the wave change.
-      </p>
-      <label>Energy Level:</label>
-      <input type="range" min="1" max="5" value="2">
-    </section>
-
-  </main>
-
-  <script src="app.js"></script>
-
-</body>
-</html>
 
