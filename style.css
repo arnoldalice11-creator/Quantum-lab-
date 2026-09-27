@@ -1,0 +1,212 @@
+/* QUANTUM LAB — v0.1 */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f4f7ff;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(80, 100, 255, 0.25), transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(150, 70, 255, 0.18), transparent 35%),
+    #071126;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+}
+
+/* Moving star background */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, white 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px);
+  background-size: 90px 90px, 140px 140px;
+  background-position: 0 0, 40px 60px;
+  animation: drift 30s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes drift {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(90px);
+  }
+}
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: rgba(5, 13, 35, 0.9);
+  border-bottom: 1px solid rgba(150, 170, 255, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+/* Main content */
+main {
+  width: min(900px, 92%);
+  margin: 30px auto;
+}
+
+/* Cards */
+.card {
+  margin: 24px 0;
+  padding: 25px;
+  border: 1px solid rgba(150, 170, 255, 0.3);
+  border-radius: 22px;
+  background: rgba(15, 28, 65, 0.82);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #b9c7ff;
+}
+
+.card h3 {
+  color: #dce3ff;
+}
+
+.card p,
+.card li {
+  font-size: 1.05rem;
+}
+
+/* Buttons */
+button {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 20px;
+  margin: 6px;
+  color: white;
+  background: linear-gradient(135deg, #5968ff, #8a4dff);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 5px 18px rgba(80, 80, 255, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(100, 100, 255, 0.45);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Menu */
+.menuButtons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.menuButtons button {
+  min-height: 70px;
+  font-size: 1.05rem;
+}
+
+/* Hidden sections */
+.hidden {
+  display: none;
+}
+
+/* Read aloud button */
+#readButton {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+/* Energy slider */
+input[type="range"] {
+  width: 100%;
+  margin: 20px 0;
+  accent-color: #8b6cff;
+}
+
+/* Labels */
+label {
+  display: block;
+  font-weight: 600;
+  color: #cbd5ff;
+}
+
+/* Lists */
+ul {
+  padding-left: 25px;
+}
+
+li {
+  margin: 8px 0;
+}
+
+/* Focus accessibility */
+button:focus,
+input:focus {
+  outline: 3px solid #aeb9ff;
+  outline-offset: 3px;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .topbar h1 {
+    font-size: 1.2rem;
+  }
+
+  main {
+    width: 94%;
+    margin-top: 20px;
+  }
+
+  .card {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .menuButtons {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: calc(100% - 12px);
+  }
+
+  .card p,
+  .card li {
+    font-size: 1rem;
+  }
+}
