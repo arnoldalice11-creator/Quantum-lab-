@@ -43,28 +43,34 @@
 
     <!-- Learn section -->
     <section id="learn-section" class="card hidden">
-      <h2>Lesson 1</h2>
+      <h2>📚 Lesson 1</h2>
       <h3>What is Quantum Mechanics?</h3>
       <p>
-        Quantum mechanics is the branch of physics
-        that describes very small things like
-        electrons, atoms, and light.
+        Quantum mechanics is the branch of physics that describes very small things like electrons, atoms, and light particles.
       </p>
       <p>
-        Things at this scale behave differently
-        from everyday objects.
+        At this microscopic scale, particles don't move like tennis balls—they can act like both waves and particles at the same time!
       </p>
+      <button onclick="showMenu()">⬅️ Back to Menu</button>
     </section>
 
     <!-- Sprint section -->
     <section id="sprint-section" class="card hidden">
-      <h2>🧠 Quick Sprint</h2>
-      <p>Test your knowledge with quick flash questions coming soon!</p>
+      <h2>🧠 Quick Sprint Quiz</h2>
+      <div id="quiz-container">
+        <p><strong>Question 1:</strong> What does quantum mechanics study?</p>
+        <button onclick="checkAnswer(true, this)">A) Very small things like atoms and electrons</button>
+        <button onclick="checkAnswer(false, this)">B) Giant planets and galaxies</button>
+        <div id="quiz-feedback" style="margin-top: 10px; font-weight: bold;"></div>
+      </div>
+      <br>
+      <button onclick="showMenu()">⬅️ Back to Menu</button>
     </section>
 
     <!-- Maths section -->
     <section id="maths-section" class="card hidden">
       <h2>🧮 Maths Pathway</h2>
+      <p>Here are the mathematical topics used in quantum mechanics:</p>
       <ul>
         <li>Functions and Graphs</li>
         <li>Derivatives</li>
@@ -74,18 +80,23 @@
         <li>Vectors</li>
         <li>Matrices</li>
       </ul>
+      <button onclick="showMenu()">⬅️ Back to Menu</button>
     </section>
 
     <!-- Experiment section -->
     <section id="experiment-section" class="card hidden">
       <h2>🔬 First Experiment</h2>
       <h3>Particle in a Box</h3>
-      <p>
-        Change the energy level and watch
-        the wave change.
-      </p>
-      <label>Energy Level:</label>
-      <input type="range" min="1" max="5" value="2">
+      <p>Change the energy level to watch the quantum wave change!</p>
+      
+      <div style="border: 2px solid #58a6ff; height: 120px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; margin: 15px 0; border-radius: 8px;">
+        <span id="waveDisplay" style="font-size: 28px; letter-spacing: 4px; font-family: monospace; color: #58a6ff;">〰️〰️〰️</span>
+      </div>
+
+      <label for="energySlider">Energy Level: <span id="energyVal">2</span></label><br><br>
+      <input type="range" id="energySlider" min="1" max="5" value="2" oninput="updateExperiment()">
+      <br><br>
+      <button onclick="showMenu()">⬅️ Back to Menu</button>
     </section>
 
   </main>
@@ -94,4 +105,5 @@
 
 </body>
 </html>
+
 
