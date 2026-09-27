@@ -9,8 +9,6 @@
 
 <body>
 
-  <div class="stars"></div>
-
   <header class="topbar">
     <h1>⚛️ Quantum Lab</h1>
     <button id="readButton">🔊 Read Aloud</button>
@@ -19,15 +17,10 @@
   <main>
 
     <!-- Welcome screen -->
-    <section class="card">
+    <section id="welcome-card" class="card">
       <h2>🌌 Welcome to Quantum Lab</h2>
-      <p>
-        Learn quantum mechanics with visual experiments,
-        short explanations, and interactive lessons.
-      </p>
-      <button onclick="showMenu()">
-        Enter the Lab
-      </button>
+      <p>Explore the strange universe of atoms and particles!</p>
+      <button onclick="showMenu()">Enter the Lab</button>
     </section>
 
     <!-- Main menu -->
@@ -43,60 +36,41 @@
 
     <!-- Learn section -->
     <section id="learn-section" class="card hidden">
-      <h2>📚 Lesson 1</h2>
-      <h3>What is Quantum Mechanics?</h3>
-      <p>
-        Quantum mechanics is the branch of physics that describes very small things like electrons, atoms, and light particles.
-      </p>
-      <p>
-        At this microscopic scale, particles don't move like tennis balls—they can act like both waves and particles at the same time!
-      </p>
-      <button onclick="showMenu()">⬅️ Back to Menu</button>
+      <h2>📚 Lesson 1: Wave-Particle Duality</h2>
+      <p>In our world, a light switch is either ON or OFF. But in quantum physics, light and electrons can behave like a <strong>wave</strong> (like ripples on water) AND a <strong>particle</strong> (like tiny marbles) at the exact same time!</p>
+      <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
     <!-- Sprint section -->
     <section id="sprint-section" class="card hidden">
       <h2>🧠 Quick Sprint Quiz</h2>
-      <div id="quiz-container">
-        <p><strong>Question 1:</strong> What does quantum mechanics study?</p>
-        <button onclick="checkAnswer(true, this)">A) Very small things like atoms and electrons</button>
-        <button onclick="checkAnswer(false, this)">B) Giant planets and galaxies</button>
-        <div id="quiz-feedback" style="margin-top: 10px; font-weight: bold;"></div>
-      </div>
-      <br>
-      <button onclick="showMenu()">⬅️ Back to Menu</button>
+      <p><strong>Question:</strong> How can light behave in quantum mechanics?</p>
+      <button onclick="checkAnswer(false)">A) Only like solid marbles</button>
+      <button onclick="checkAnswer(true)">B) Like both particles AND waves</button>
+      <p id="quiz-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+      <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
     <!-- Maths section -->
     <section id="maths-section" class="card hidden">
-      <h2>🧮 Maths Pathway</h2>
-      <p>Here are the mathematical topics used in quantum mechanics:</p>
-      <ul>
-        <li>Functions and Graphs</li>
-        <li>Derivatives</li>
-        <li>Integrals</li>
-        <li>Differential Equations</li>
-        <li>Complex Numbers</li>
-        <li>Vectors</li>
-        <li>Matrices</li>
-      </ul>
-      <button onclick="showMenu()">⬅️ Back to Menu</button>
+      <h2>🧮 Lesson: Quantum Probability</h2>
+      <p>Instead of knowing exactly where an electron is, quantum math uses <strong>probability waves</strong> ($\Psi$). The higher the wave crest, the higher the chance of finding the electron there!</p>
+      <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
     <!-- Experiment section -->
     <section id="experiment-section" class="card hidden">
-      <h2>🔬 First Experiment</h2>
-      <h3>Particle in a Box</h3>
-      <p>Change the energy level to watch the quantum wave change!</p>
-      
-      <div style="border: 2px solid #58a6ff; height: 120px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; margin: 15px 0; border-radius: 8px;">
-        <span id="waveDisplay" style="font-size: 28px; letter-spacing: 4px; font-family: monospace; color: #58a6ff;">〰️〰️〰️</span>
+      <h2>🔬 Experiment: Particle in a Box</h2>
+      <p>Move the energy slider to see the particle wave wiggle faster!</p>
+
+      <div style="border: 2px solid #58a6ff; height: 80px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 8px; margin: 10px 0;">
+        <span id="waveDisplay" style="font-size: 30px; color: #58a6ff; font-family: monospace;">〰️〰️〰️</span>
       </div>
 
-      <label for="energySlider">Energy Level: <span id="energyVal">2</span></label><br><br>
-      <input type="range" id="energySlider" min="1" max="5" value="2" oninput="updateExperiment()">
-      <br><br>
-      <button onclick="showMenu()">⬅️ Back to Menu</button>
+      <label>Energy Level: <strong id="energyVal">2</strong></label><br>
+      <input type="range" id="energySlider" min="1" max="5" value="2"><br><br>
+
+      <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
   </main>
@@ -105,5 +79,6 @@
 
 </body>
 </html>
+
 
 
