@@ -1,51 +1,97 @@
-// QUANTUM LAB — v0.1
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantum Lab v0.1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-// Show the main menu
-function showMenu() {
-  const menu = document.getElementById("menu");
+<body>
 
-  if (menu) {
-    menu.classList.remove("hidden");
-    menu.scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-}
+  <div class="stars"></div>
 
-// Read text aloud
-const readButton = document.getElementById("readButton");
+  <header class="topbar">
+    <h1>⚛️ Quantum Lab</h1>
+    <button id="readButton">🔊 Read Aloud</button>
+  </header>
 
-if (readButton) {
-  readButton.addEventListener("click", () => {
-    const text = document.body.innerText;
+  <main>
 
-    speechSynthesis.cancel();
+    <!-- Welcome screen -->
+    <section class="card">
+      <h2>🌌 Welcome to Quantum Lab</h2>
+      <p>
+        Learn quantum mechanics with visual experiments,
+        short explanations, and interactive lessons.
+      </p>
+      <button onclick="showMenu()">
+        Enter the Lab
+      </button>
+    </section>
 
-    const speech = new SpeechSynthesisUtterance(text);
+    <!-- Main menu -->
+    <section id="menu" class="card hidden">
+      <h2>Main Menu</h2>
+      <div class="menuButtons">
+        <button onclick="showSection('learn-section')">📚 Learn</button>
+        <button onclick="showSection('sprint-section')">🧠 Sprint</button>
+        <button onclick="showSection('experiment-section')">🔬 Experiment</button>
+        <button onclick="showSection('maths-section')">🧮 Maths</button>
+      </div>
+    </section>
 
-    speech.rate = 0.9;
-    speech.pitch = 1;
-    speech.volume = 1;
+    <!-- Learn section -->
+    <section id="learn-section" class="card hidden">
+      <h2>Lesson 1</h2>
+      <h3>What is Quantum Mechanics?</h3>
+      <p>
+        Quantum mechanics is the branch of physics
+        that describes very small things like
+        electrons, atoms, and light.
+      </p>
+      <p>
+        Things at this scale behave differently
+        from everyday objects.
+      </p>
+    </section>
 
-    speechSynthesis.speak(speech);
-  });
-}
+    <!-- Sprint section -->
+    <section id="sprint-section" class="card hidden">
+      <h2>🧠 Quick Sprint</h2>
+      <p>Test your knowledge with quick flash questions coming soon!</p>
+    </section>
 
-// Energy-level experiment
-const energySlider = document.querySelector(
-  'input[type="range"]'
-);
+    <!-- Maths section -->
+    <section id="maths-section" class="card hidden">
+      <h2>🧮 Maths Pathway</h2>
+      <ul>
+        <li>Functions and Graphs</li>
+        <li>Derivatives</li>
+        <li>Integrals</li>
+        <li>Differential Equations</li>
+        <li>Complex Numbers</li>
+        <li>Vectors</li>
+        <li>Matrices</li>
+      </ul>
+    </section>
 
-if (energySlider) {
-  energySlider.addEventListener("input", () => {
-    const level = energySlider.value;
+    <!-- Experiment section -->
+    <section id="experiment-section" class="card hidden">
+      <h2>🔬 First Experiment</h2>
+      <h3>Particle in a Box</h3>
+      <p>
+        Change the energy level and watch
+        the wave change.
+      </p>
+      <label>Energy Level:</label>
+      <input type="range" min="1" max="5" value="2">
+    </section>
 
-    console.log(
-      "Quantum energy level:",
-      level
-    );
-  });
-}
+  </main>
 
-// Welcome message
-console.log("⚛️ Quantum Lab v0.1 loaded!");
+  <script src="app.js"></script>
+
+</body>
+</html>
+
