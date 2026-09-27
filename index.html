@@ -4,34 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quantum Lab v0.1</title>
-
-  <!-- Connects the CSS file -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Space background -->
   <div class="stars"></div>
 
-  <!-- Top bar -->
   <header class="topbar">
     <h1>⚛️ Quantum Lab</h1>
     <button id="readButton">🔊 Read Aloud</button>
   </header>
 
-  <!-- Main area -->
   <main>
 
     <!-- Welcome screen -->
     <section class="card">
       <h2>🌌 Welcome to Quantum Lab</h2>
-
       <p>
         Learn quantum mechanics with visual experiments,
         short explanations, and interactive lessons.
       </p>
-
       <button onclick="showMenu()">
         Enter the Lab
       </button>
@@ -39,56 +32,39 @@
 
     <!-- Main menu -->
     <section id="menu" class="card hidden">
-
       <h2>Main Menu</h2>
-
       <div class="menuButtons">
-
-        <button>
-          📚 Learn
-        </button>
-
-        <button>
-          🧠 Sprint
-        </button>
-
-        <button>
-          🔬 Experiment
-        </button>
-
-        <button>
-          🧮 Maths
-        </button>
-
+        <button onclick="showSection('learn-section')">📚 Learn</button>
+        <button onclick="showSection('sprint-section')">🧠 Sprint</button>
+        <button onclick="showSection('experiment-section')">🔬 Experiment</button>
+        <button onclick="showSection('maths-section')">🧮 Maths</button>
       </div>
-
     </section>
 
     <!-- Learn section -->
-    <section class="card">
-
+    <section id="learn-section" class="card hidden">
       <h2>Lesson 1</h2>
-
       <h3>What is Quantum Mechanics?</h3>
-
       <p>
         Quantum mechanics is the branch of physics
         that describes very small things like
         electrons, atoms, and light.
       </p>
-
       <p>
         Things at this scale behave differently
         from everyday objects.
       </p>
+    </section>
 
+    <!-- Sprint section -->
+    <section id="sprint-section" class="card hidden">
+      <h2>🧠 Quick Sprint</h2>
+      <p>Test your knowledge with quick flash questions coming soon!</p>
     </section>
 
     <!-- Maths section -->
-    <section class="card">
-
+    <section id="maths-section" class="card hidden">
       <h2>🧮 Maths Pathway</h2>
-
       <ul>
         <li>Functions and Graphs</li>
         <li>Derivatives</li>
@@ -98,38 +74,24 @@
         <li>Vectors</li>
         <li>Matrices</li>
       </ul>
-
     </section>
 
     <!-- Experiment section -->
-    <section class="card">
-
+    <section id="experiment-section" class="card hidden">
       <h2>🔬 First Experiment</h2>
-
       <h3>Particle in a Box</h3>
-
       <p>
         Change the energy level and watch
         the wave change.
       </p>
-
-      <label>
-        Energy Level:
-      </label>
-
-      <input
-        type="range"
-        min="1"
-        max="5"
-        value="2"
-      >
-
+      <label>Energy Level:</label>
+      <input type="range" min="1" max="5" value="2">
     </section>
 
   </main>
 
-  <!-- Connects JavaScript -->
   <script src="app.js"></script>
 
 </body>
 </html>
+
