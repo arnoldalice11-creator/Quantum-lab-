@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quantum Lab v0.1</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 </head>
 
 <body>
@@ -19,7 +20,7 @@
     <!-- Welcome screen -->
     <section id="welcome-card" class="card">
       <h2>🌌 Welcome to Quantum Lab</h2>
-      <p>Explore the strange universe of atoms and particles!</p>
+      <p style="font-size: 20px;">Explore the strange universe of atoms and particles!</p>
       <button onclick="showMenu()">Enter the Lab</button>
     </section>
 
@@ -34,21 +35,33 @@
       </div>
     </section>
 
-    <!-- Daily Learn section -->
+    <!-- Paged Daily Learn section with Big Blue Text Box -->
     <section id="learn-section" class="card hidden">
       <h2 id="lesson-title">📚 Lesson of the Day</h2>
-      <p id="lesson-content">Loading today's lesson...</p>
+      <p id="lesson-page-counter" style="font-size: 15px; color: #8b949e; margin-bottom: 5px;">Page 1 of 3</p>
+      
+      <!-- Big Blue Box for Lesson Text -->
+      <div class="big-text-box">
+        <p id="lesson-content" style="margin: 0; min-height: 90px;"></p>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+        <button id="prev-page-btn" onclick="changeLessonPage(-1)">⬅️ Prev</button>
+        <button id="next-page-btn" onclick="changeLessonPage(1)">Next Page ➡️</button>
+      </div>
       <br>
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
-    <!-- Sprint section with multi-questions -->
+    <!-- Sprint section -->
     <section id="sprint-section" class="card hidden">
       <h2>🧠 Quick Sprint Quiz</h2>
       <div id="quiz-container">
-        <p id="quiz-question"><strong>Question 1:</strong></p>
+        <div class="big-text-box">
+          <p id="quiz-question" style="margin: 0;"><strong>Question 1:</strong></p>
+        </div>
         <div id="quiz-options"></div>
-        <p id="quiz-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+        <p id="quiz-feedback" style="margin-top: 15px; font-weight: bold; font-size: 20px;"></p>
         <button id="next-btn" class="hidden" onclick="nextQuestion()">Next Question ➡️</button>
       </div>
       <br>
@@ -57,24 +70,46 @@
 
     <!-- Maths section -->
     <section id="maths-section" class="card hidden">
-      <h2>🧮 Lesson: Quantum Probability</h2>
-      <p>Instead of knowing exactly where an electron is, quantum math uses <strong>probability waves</strong> ($\Psi$). The higher the wave crest, the higher the chance of finding the electron there!</p>
+      <h2>🧮 Quantum Maths & Wave Equations</h2>
+      <p>In quantum mechanics, particles are described by the <strong>Schrödinger Wave Equation</strong>:</p>
+      
+      <div class="math-box">
+        iℏ (∂/∂t)Ψ(x,t) = ĤΨ(x,t)
+      </div>
+
+      <div class="big-text-box">
+        <p style="margin-top: 0; font-weight: bold;">Key Variables:</p>
+        <ul style="margin-bottom: 0; padding-left: 20px;">
+          <li><strong>Ψ (Psi):</strong> The wave function (probability amplitude).</li>
+          <li><strong>ℏ (h-bar):</strong> Reduced Planck's constant.</li>
+          <li><strong>Ĥ:</strong> The Hamiltonian operator (total energy).</li>
+        </ul>
+      </div>
 
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
     <!-- Experiment section -->
     <section id="experiment-section" class="card hidden">
-      <h2>🔬 Experiment: Particle in a Box</h2>
-      <p>Move the energy slider to see the particle wave wiggle faster!</p>
+      <h2>🔬 Interactive Particle Box</h2>
+      <p>Select a particle type, tap inside the box to place it, and slide energy to alter its wave!</p>
 
-      <div style="border: 2px solid #58a6ff; height: 80px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 8px; margin: 10px 0;">
-        <span id="waveDisplay" style="font-size: 30px; color: #58a6ff; font-family: monospace;">〰️〰️〰️</span>
+      <div class="particle-palette">
+        <span>Select: </span>
+        <button class="part-btn active" onclick="setParticle('electron', this)">⚡ Electron</button>
+        <button class="part-btn" onclick="setParticle('atom', this)">⚛️ Atom</button>
+        <button class="part-btn" onclick="setParticle('photon', this)">✨ Photon</button>
       </div>
 
-      <label>Energy Level: <strong id="energyVal">2</strong></label><br>
+      <div id="labBox" onclick="placeParticle(event)">
+        <span id="waveDisplay">〰️〰️〰️</span>
+        <div id="particleCanvas"></div>
+      </div>
+
+      <label style="font-size: 20px;">Energy Level: <strong id="energyVal">2</strong></label><br>
       <input type="range" id="energySlider" min="1" max="5" value="2"><br><br>
 
+      <button onclick="clearParticles()" style="background-color: #d73a49;">🗑️ Clear Box</button>
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
@@ -84,6 +119,3 @@
 
 </body>
 </html>
-
-
-
