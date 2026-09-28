@@ -34,20 +34,24 @@
       </div>
     </section>
 
-    <!-- Learn section -->
+    <!-- Daily Learn section -->
     <section id="learn-section" class="card hidden">
-      <h2>📚 Lesson 1: Wave-Particle Duality</h2>
-      <p>In our world, a light switch is either ON or OFF. But in quantum physics, light and electrons can behave like a <strong>wave</strong> (like ripples on water) AND a <strong>particle</strong> (like tiny marbles) at the exact same time!</p>
+      <h2 id="lesson-title">📚 Lesson of the Day</h2>
+      <p id="lesson-content">Loading today's lesson...</p>
+      <br>
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
-    <!-- Sprint section -->
+    <!-- Sprint section with multi-questions -->
     <section id="sprint-section" class="card hidden">
       <h2>🧠 Quick Sprint Quiz</h2>
-      <p><strong>Question:</strong> How can light behave in quantum mechanics?</p>
-      <button onclick="checkAnswer(false)">A) Only like solid marbles</button>
-      <button onclick="checkAnswer(true)">B) Like both particles AND waves</button>
-      <p id="quiz-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+      <div id="quiz-container">
+        <p id="quiz-question"><strong>Question 1:</strong></p>
+        <div id="quiz-options"></div>
+        <p id="quiz-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+        <button id="next-btn" class="hidden" onclick="nextQuestion()">Next Question ➡️</button>
+      </div>
+      <br>
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
@@ -55,6 +59,7 @@
     <section id="maths-section" class="card hidden">
       <h2>🧮 Lesson: Quantum Probability</h2>
       <p>Instead of knowing exactly where an electron is, quantum math uses <strong>probability waves</strong> ($\Psi$). The higher the wave crest, the higher the chance of finding the electron there!</p>
+
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
