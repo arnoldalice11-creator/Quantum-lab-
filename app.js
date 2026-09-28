@@ -68,14 +68,12 @@ function renderLessonPage() {
   const prevBtn = document.getElementById("prev-page-btn");
   const nextBtn = document.getElementById("next-page-btn");
 
-  // Toggle Previous button
   if (currentLessonPage === 0) {
     prevBtn.style.display = "none";
   } else {
     prevBtn.style.display = "inline-block";
   }
 
-  // Next page or Sprint recap button
   if (currentLessonPage === lesson.pages.length - 1) {
     nextBtn.innerText = "Take Today's Sprint 🧠";
     nextBtn.style.backgroundColor = "#1f6beb";
@@ -92,8 +90,11 @@ function changeLessonPage(direction) {
   renderLessonPage();
 }
 
-// --- INTERACTIVE PARTICLE EXPERIMENT ---
+// --- INTERACTIVE DRAGGABLE EXPERIMENT & ELECTRON SHELL ---
 let currentParticleType = "electron";
+let activeDragElement = null;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
 
 function setParticle(type, btn) {
   currentParticleType = type;
@@ -101,7 +102,9 @@ function setParticle(type, btn) {
   btn.classList.add("active");
 }
 
-function placeParticle(event) {
+function handleBoxClick(event) {
+  if (event.target.classList.contains("draggable-particle")) return;
+
   const canvas = document.getElementById("particleCanvas");
   if (!canvas) return;
 
@@ -110,20 +113,96 @@ function placeParticle(event) {
   const y = event.clientY - rect.top;
 
   const particle = document.createElement("div");
-  particle.className = "spawned-particle";
+  particle.className = "draggable-particle";
   particle.style.left = `${x}px`;
   particle.style.top = `${y}px`;
 
-  if (currentParticleType === "electron") particle.innerText = "⚡";
-  else if (currentParticleType === "atom") particle.innerText = "⚛️";
-  else if (currentParticleType === "photon") particle.innerText = "✨";
+  const particleIcons = {
+    electron: "⚡",
+    atom: "⚛️",
+    photon: "✨",
+    neutron: "🔴"
+  };
+
+  particle.innerText = particleIcons[currentParticleType] || "⚡";
+
+  // Mouse & Touch events for dragging
+  particle.addEventListener("mousedown", startDrag);
+  particle.addEventListener("touchstart", startDrag, { passive: false });
 
   canvas.appendChild(particle);
+}
+
+function startDrag(e) {
+  e.stopPropagation();
+  e.preventDefault();
+
+  activeDragElement = e.target;
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+  const rect = activeDragElement.getBoundingClientRect();
+  dragOffsetX = clientX - rect.left - rect.width / 2;
+  dragOffsetY = clientY - rect.top - rect.height / 2;
+
+  document.addEventListener("mousemove", dragMove);
+  document.addEventListener("touchmove", dragMove, { passive: false });
+  document.addEventListener("mouseup", stopDrag);
+  document.addEventListener("touchend", stopDrag);
+}
+
+function dragMove(e) {
+  if (!activeDragElement) return;
+  e.preventDefault();
+
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+  const canvas = document.getElementById("particleCanvas");
+  const rect = canvas.getBoundingClientRect();
+
+  let x = clientX - rect.left;
+  let y = clientY - rect.top;
+
+  // Keep within bounds
+  x = Math.max(15, Math.min(rect.width - 15, x));
+  y = Math.max(15, Math.min(rect.height - 15, y));
+
+  activeDragElement.style.left = `${x}px`;
+  activeDragElement.style.top = `${y}px`;
+}
+
+function stopDrag() {
+  activeDragElement = null;
+  document.removeEventListener("mousemove", dragMove);
+  document.removeEventListener("touchmove", dragMove);
+  document.removeEventListener("mouseup", stopDrag);
+  document.removeEventListener("touchend", stopDrag);
 }
 
 function clearParticles() {
   const canvas = document.getElementById("particleCanvas");
   if (canvas) canvas.innerHTML = "";
+}
+
+// Bohr Electron Shell System
+let shellOrbit = 1;
+
+function moveShell(orbitNumber) {
+  shellOrbit = orbitNumber;
+  const electron = document.getElementById("shellElectron");
+  const status = document.getElementById("shellStatus");
+
+  const orbitRadii = { 1: 30, 2: 55, 3: 80 };
+  const radius = orbitRadii[orbitNumber];
+
+  if (electron) {
+    electron.style.transform = `translate(-50%, -50%) translateY(-${radius}px)`;
+  }
+
+  if (status) {
+    status.innerText = `Electron at Level n=${orbitNumber} (Energy: ${orbitNumber * 13.6} eV)`;
+  }
 }
 
 // Energy Wave Slider
