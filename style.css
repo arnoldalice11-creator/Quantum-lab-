@@ -31,7 +31,7 @@ main {
   margin-bottom: 15px;
 }
 
-/* THIS FIXES THE BIG SLIDE: Hides inactive sections */
+/* Hides sections when you aren't looking at them */
 .hidden {
   display: none !important;
 }
@@ -60,4 +60,3 @@ button:active {
 input[type="range"] {
   width: 100%;
 }
-
