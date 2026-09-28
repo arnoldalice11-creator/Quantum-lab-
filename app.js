@@ -14,41 +14,138 @@ function showSection(sectionId) {
     target.classList.remove("hidden");
   }
 
-  // Reload quiz or daily lesson if opened
   if (sectionId === "sprint-section") resetQuiz();
-  if (sectionId === "learn-section") loadDailyLesson();
+  if (sectionId === "learn-section") startDailyLesson();
 }
 
-// --- DAILY LESSON SYSTEM ---
+// --- PAGED DAILY LESSON SYSTEM ---
 const dailyLessons = [
   {
     title: "📚 Lesson: Wave-Particle Duality",
-    content: "Light and electrons act like ripples on water (waves) AND tiny solid marbles (particles) at the exact same time!"
+    pages: [
+      "In our everyday world, things are clear-cut. A tennis ball is a solid object, and ripples on a pond are waves. They behave completely differently.",
+      "In quantum mechanics, microscopic objects like light and electrons break this rule! They act like both ripples on water AND tiny solid marbles at the exact same time.",
+      "This is called Wave-Particle Duality. Scientists discovered that when you aren't looking, light spreads out like a wave, but when you detect it, it hits like a particle!"
+    ]
   },
   {
     title: "📚 Lesson: Quantum Superposition",
-    content: "A quantum particle can exist in multiple possibilities at once until someone measures or observes it!"
+    pages: [
+      "Imagine flipping a coin. While it's spinning in the air, is it heads or tails? It’s almost like a mix of both at the same time until it lands.",
+      "Quantum particles do something very similar! Before you measure a particle, it exists in multiple possible places or states at the exact same time.",
+      "This state of multiple possibilities is called Superposition. The moment you measure the particle, superposition ends and it picks one single result!"
+    ]
   },
   {
     title: "📚 Lesson: Quantum Tunneling",
-    content: "Particles can sometimes pass right through solid barriers like ghosts because their probability wave spreads past the wall!"
-  },
-  {
-    title: "📚 Lesson: Quantum Entanglement",
-    content: "Two particles can become linked. Spanning across light-years, changing one instantly changes the other!"
+    pages: [
+      "If you throw a tennis ball at a brick wall, it bounces back 100% of the time. It doesn't have enough energy to pass through solid matter.",
+      "Because quantum particles spread out like probability waves, part of that wave can actually extend past a solid barrier or wall!",
+      "There is a small chance the particle instantly appears on the other side of the barrier without breaking it. This ghost-like trick is called Quantum Tunneling!"
+    ]
   }
 ];
 
-function loadDailyLesson() {
-  // Uses day of the year to cycle lessons daily
+let currentLessonIndex = 0;
+let currentLessonPage = 0;
+
+function startDailyLesson() {
   const today = new Date();
   const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-  const lessonIndex = dayOfYear % dailyLessons.length;
-  
-  const lesson = dailyLessons[lessonIndex];
-  document.getElementById("lesson-title").innerText = lesson.title;
-  document.getElementById("lesson-content").innerText = lesson.content;
+  currentLessonIndex = dayOfYear % dailyLessons.length;
+  currentLessonPage = 0;
+
+  renderLessonPage();
 }
+
+function renderLessonPage() {
+  const lesson = dailyLessons[currentLessonIndex];
+  
+  document.getElementById("lesson-title").innerText = lesson.title;
+  document.getElementById("lesson-page-counter").innerText = `Page ${currentLessonPage + 1} of ${lesson.pages.length}`;
+  document.getElementById("lesson-content").innerText = lesson.pages[currentLessonPage];
+
+  const prevBtn = document.getElementById("prev-page-btn");
+  const nextBtn = document.getElementById("next-page-btn");
+
+  // Toggle Previous button
+  if (currentLessonPage === 0) {
+    prevBtn.style.display = "none";
+  } else {
+    prevBtn.style.display = "inline-block";
+  }
+
+  // Next page or Sprint recap button
+  if (currentLessonPage === lesson.pages.length - 1) {
+    nextBtn.innerText = "Take Today's Sprint 🧠";
+    nextBtn.style.backgroundColor = "#1f6beb";
+    nextBtn.onclick = () => showSection("sprint-section");
+  } else {
+    nextBtn.innerText = "Next Page ➡️";
+    nextBtn.style.backgroundColor = "#238636";
+    nextBtn.onclick = () => changeLessonPage(1);
+  }
+}
+
+function changeLessonPage(direction) {
+  currentLessonPage += direction;
+  renderLessonPage();
+}
+
+// --- INTERACTIVE PARTICLE EXPERIMENT ---
+let currentParticleType = "electron";
+
+function setParticle(type, btn) {
+  currentParticleType = type;
+  document.querySelectorAll(".part-btn").forEach((b) => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function placeParticle(event) {
+  const canvas = document.getElementById("particleCanvas");
+  if (!canvas) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  const particle = document.createElement("div");
+  particle.className = "spawned-particle";
+  particle.style.left = `${x}px`;
+  particle.style.top = `${y}px`;
+
+  if (currentParticleType === "electron") particle.innerText = "⚡";
+  else if (currentParticleType === "atom") particle.innerText = "⚛️";
+  else if (currentParticleType === "photon") particle.innerText = "✨";
+
+  canvas.appendChild(particle);
+}
+
+function clearParticles() {
+  const canvas = document.getElementById("particleCanvas");
+  if (canvas) canvas.innerHTML = "";
+}
+
+// Energy Wave Slider
+document.addEventListener("input", (e) => {
+  if (e.target && e.target.id === "energySlider") {
+    const val = e.target.value;
+    const valSpan = document.getElementById("energyVal");
+    const waveDisplay = document.getElementById("waveDisplay");
+
+    if (valSpan) valSpan.innerText = val;
+
+    const waves = [
+      "〰️〰️〰️",
+      "〰️∿〰️∿",
+      "∿∿∿∿∿",
+      "∿⚡∿⚡∿⚡",
+      "⚡⚡⚡⚡⚡⚡"
+    ];
+
+    if (waveDisplay) waveDisplay.innerText = waves[val - 1];
+  }
+});
 
 // --- SPRINT QUIZ SYSTEM ---
 const quizData = [
@@ -59,7 +156,7 @@ const quizData = [
   },
   {
     question: "What is Superposition?",
-    options: ["Flying fast", "Existing in multiple states at once", "A type of battery"],
+    options: ["Flying fast", "Existing in multiple states at once", "A battery"],
     correct: 1
   },
   {
@@ -81,8 +178,8 @@ function resetQuiz() {
 function loadQuestion() {
   const feedback = document.getElementById("quiz-feedback");
   const nextBtn = document.getElementById("next-btn");
-  feedback.innerText = "";
-  nextBtn.classList.add("hidden");
+  if (feedback) feedback.innerText = "";
+  if (nextBtn) nextBtn.classList.add("hidden");
 
   if (currentQ >= quizData.length) {
     document.getElementById("quiz-question").innerText = `🎉 Quiz Complete! You scored ${score} out of ${quizData.length}!`;
@@ -119,7 +216,7 @@ function checkAnswer(selected, correct) {
     feedback.innerText = "❌ Oops, that wasn't right!";
   }
 
-  nextBtn.classList.remove("hidden");
+  if (nextBtn) nextBtn.classList.remove("hidden");
 }
 
 function nextQuestion() {
@@ -152,26 +249,4 @@ if (readButton) {
   });
 }
 
-// --- EXPERIMENT WAVE SLIDER ---
-document.addEventListener("input", (e) => {
-  if (e.target && e.target.id === "energySlider") {
-    const val = e.target.value;
-    const valSpan = document.getElementById("energyVal");
-    const waveDisplay = document.getElementById("waveDisplay");
-
-    if (valSpan) valSpan.innerText = val;
-
-    const waves = [
-      "〰️〰️〰️",
-      "〰️∿〰️∿",
-      "∿∿∿∿∿",
-      "∿⚡∿⚡∿⚡",
-      "⚡⚡⚡⚡⚡⚡"
-    ];
-
-    if (waveDisplay) waveDisplay.innerText = waves[val - 1];
-  }
-});
-
-console.log("⚛️ Quantum Lab v0.1 ready!");
-
+console.log("⚛️ Quantum Lab updated!");
