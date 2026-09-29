@@ -89,19 +89,20 @@
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
-    <!-- Experiment section -->
+    <!-- Interactive Draggable Particle & Electron Shell Experiment -->
     <section id="experiment-section" class="card hidden">
-      <h2>🔬 Interactive Particle Box</h2>
-      <p>Select a particle type, tap inside the box to place it, and slide energy to alter its wave!</p>
+      <h2>🔬 Interactive Particle Lab</h2>
+      <p>Tap a button to add a particle, then <strong>drag it around</strong> inside the box!</p>
 
       <div class="particle-palette">
-        <span>Select: </span>
-        <button class="part-btn active" onclick="setParticle('electron', this)">⚡ Electron</button>
-        <button class="part-btn" onclick="setParticle('atom', this)">⚛️ Atom</button>
-        <button class="part-btn" onclick="setParticle('photon', this)">✨ Photon</button>
+        <span>Add: </span>
+        <button class="part-btn" onclick="addParticle('electron')">⚡ Electron</button>
+        <button class="part-btn" onclick="addParticle('atom')">⚛️ Atom</button>
+        <button class="part-btn" onclick="addParticle('photon')">✨ Photon</button>
+        <button class="part-btn" onclick="addParticle('neutron')">🔴 Neutron</button>
       </div>
 
-      <div id="labBox" onclick="placeParticle(event)">
+      <div id="labBox">
         <span id="waveDisplay">〰️〰️〰️</span>
         <div id="particleCanvas"></div>
       </div>
@@ -110,6 +111,29 @@
       <input type="range" id="energySlider" min="1" max="5" value="2"><br><br>
 
       <button onclick="clearParticles()" style="background-color: #d73a49;">🗑️ Clear Box</button>
+
+      <hr style="border: 1px solid #30363d; margin: 20px 0;">
+
+      <!-- Electron Shell Orbit Model -->
+      <h3>⚛️ Electron Shell Model</h3>
+      <p>Jump the electron between shell energy levels!</p>
+
+      <div class="atom-shell-container">
+        <div class="shell shell-3"></div>
+        <div class="shell shell-2"></div>
+        <div class="shell shell-1"></div>
+        <div class="nucleus">⚛️</div>
+        <div id="shellElectron" class="shell-electron">⚡</div>
+      </div>
+
+      <p id="shellStatus" style="font-weight: bold; color: #58a6ff; text-align: center;">Electron at Level n=1 (Energy: 13.6 eV)</p>
+
+      <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px;">
+        <button onclick="moveShell(1)">Orbit n=1</button>
+        <button onclick="moveShell(2)">Orbit n=2</button>
+        <button onclick="moveShell(3)">Orbit n=3</button>
+      </div>
+
       <button onclick="showSection('menu')">⬅️ Back to Menu</button>
     </section>
 
